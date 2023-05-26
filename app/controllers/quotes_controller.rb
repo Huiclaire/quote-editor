@@ -35,7 +35,14 @@ class QuotesController < ApplicationController
 
   def destroy
     @quote.destroy
-    redirect_to quotes_path, notice: "Quote was successfully destroyed."
+
+    respond_to do |format|
+      format.html { redirect_to quotes_path, notice: "Quote was successfully destroyed." }
+      format.turbo_stream
+      # used for Turbo Streams requests. If the request is a Turbo stream request.
+      #  the controller should respond with Turbo Streams actions to update the
+      # client's DOM.
+    end
   end
 
   private
