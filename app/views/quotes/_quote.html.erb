@@ -1,10 +1,24 @@
 <%= turbo_frame_tag quote do %>
+<%# the 'turbo_frame_tag' helper automatically generates an ID for the Turbo
+Frame using the object's class name and ID. 'quote' refers to an instance of the
+Quote model. %>
+<%# By passing 'quote' as the argument, the 'turbo_frame_tag' generates an ID for
+the Turbo Frame based on the 'quote' object. %>
   <div class="quote">
-    <%= link_to quote.name, quote_path(quote) %>
+    <%= link_to quote.name,
+                quote_path(quote),
+                data: { turbo_frame: "_top" } %>
+                <%# tell Turbo to replace the whole page with the content of the
+                linked page when the link is clicked. %>
+                <%# It is used as an attribute option with 'link_to' helper method %>
     <div class="quote__actions">
       <%= button_to "Delete",
                     quote_path(quote),
                     method: :delete,
+                    # form: { turbo_frame: "_top" },
+                    # # with 'form_with' or 'form_tag' helper method.
+                    # # when the form is submitted, the response should replace
+                    # # the whole page.
                     class: "btn btn--light" %>
       <%= link_to "Edit",
                   edit_quote_path(quote),
